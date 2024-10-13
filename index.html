@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Dödsförutsägelse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
     <style>
         body {
             min-height: 100vh;
-            background-color: #FEEBC8; /* bg-orange-100 */
+            background: url('https://www.transparenttextures.com/patterns/dark-denim-3.png'), #2d2d2d;
+            color: #FFFAF0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -16,19 +18,20 @@
         .container {
             max-width: 28rem; /* max-w-md */
             width: 100%;
-            background-color: #FBD38D; /* bg-orange-200 */
+            background-color: rgba(53, 53, 53, 0.9); /* mörk bakgrund med lätt transparens */
             border-radius: 0.5rem;
-            box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.5);
             padding: 1.5rem;
         }
         h1 {
-            font-size: 1.875rem; /* text-3xl */
+            font-size: 2.5rem; /* större text */
             font-weight: bold;
-            color: #9C4221; /* text-orange-800 */
+            color: #FF6F61; /* ljust orange */
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'Creepster', cursive;
         }
         form {
             display: grid;
@@ -38,30 +41,42 @@
             width: 100%;
             padding: 0.5rem;
             border-radius: 0.25rem;
-            border: 1px solid #F6AD55; /* border-orange-300 */
-            background-color: #FFFAF0; /* bg-orange-50 */
+            border: 1px solid #FF6F61;
+            background-color: #3e3e3e;
+            color: #FFFAF0;
         }
         button {
             padding: 0.5rem;
             border-radius: 0.25rem;
             border: none;
-            color: white;
-            background-color: #ED8936; /* bg-orange-500 */
+            color: #FFFAF0;
+            background-color: #FF6F61; /* Halloween-orange */
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #DD6B20; /* bg-orange-600 */
+            background-color: #D64933; /* mörkare orange för hover-effekt */
         }
         .alert {
             margin-top: 1.5rem;
-            background-color: #FBD38D; /* bg-orange-300 */
-            border: 1px solid #DD6B20; /* border-orange-500 */
+            background-color: rgba(255, 111, 97, 0.9); /* bg-orange-300 med transparens */
+            border: 1px solid #D64933;
             padding: 1rem;
             border-radius: 0.25rem;
         }
         .alert-title {
             font-weight: bold;
             margin-bottom: 0.5rem;
+        }
+        .bat {
+            position: absolute;
+            animation: flyAcross 10s linear infinite;
+            top: 10%;
+            left: 0;
+        }
+        @keyframes flyAcross {
+            0% { transform: translateX(-100vw); }
+            100% { transform: translateX(100vw); }
         }
     </style>
 </head>
@@ -79,7 +94,7 @@
             </select>
             <div style="display: flex; gap: 0.5rem;">
                 <button type="submit" style="flex: 1;">Förutsäg min död!</button>
-                <button type="button" id="resetButton" style="background-color: #F6AD55; color: #9C4221;">🔄</button>
+                <button type="button" id="resetButton" style="background-color: #D64933; color: #FFFAF0;">🔄</button>
             </div>
         </form>
         <div id="predictionResult" class="alert" style="display: none;">
@@ -90,6 +105,8 @@
             </div>
         </div>
     </div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Bat_icon.svg" class="bat" width="50" alt="fladdermus">
+
     <script>
         const activities = [
             "äter tacos",
