@@ -126,17 +126,9 @@
         }
 
         function generateRandomDateFromHash(hash) {
-            const currentDate = new Date();
-            const yearsToAdd = (hash % 80) + 1; // 1 till 80 år
-            const monthsToAdd = (hash % 12);
-            const daysToAdd = (hash % 28) + 1; // 1 till 28 dagar
-
-            const futureDate = new Date(
-                currentDate.getFullYear() + yearsToAdd,
-                currentDate.getMonth() + monthsToAdd,
-                currentDate.getDate() + daysToAdd
-            );
-
+            const baseDate = new Date(2020, 0, 1); // Fast basdatum: 1 januari 2020
+            const totalDaysToAdd = hash % (80 * 365); // Upp till 80 år framåt
+            const futureDate = new Date(baseDate.getTime() + totalDaysToAdd * 24 * 60 * 60 * 1000);
             return futureDate.toLocaleDateString('sv-SE');
         }
 
