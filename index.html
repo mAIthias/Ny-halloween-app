@@ -78,6 +78,25 @@
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
+        /* Stil för ljudknappen */
+        #unmuteButton {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 2;
+            background-color: rgba(255, 111, 97, 0.9);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            color: #FFFAF0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        #unmuteButton:hover {
+            background-color: #D64933;
+        }
     </style>
 </head>
 <body>
@@ -86,6 +105,9 @@
         <source src="https://storage.googleapis.com/mathias_halloween/Halloween.mp4" type="video/mp4">
         Din webbläsare stödjer inte video-taggen.
     </video>
+
+    <!-- Knapp för att sätta på ljudet -->
+    <button id="unmuteButton">🔊 Slå på ljud</button>
 
     <div class="container">
         <h1>💀 Dödsförutsägelse 👻</h1>
@@ -181,6 +203,19 @@
             document.getElementById('footSize').value = '';
             document.getElementById('handedness').value = '';
             document.getElementById('predictionResult').style.display = 'none';
+        });
+
+        // Funktion för att sätta på ljudet
+        document.getElementById('unmuteButton').addEventListener('click', function() {
+            const video = document.getElementById('video-bg');
+            if (video.muted) {
+                video.muted = false;
+                video.play();
+                this.innerText = '🔇 Stäng av ljud';
+            } else {
+                video.muted = true;
+                this.innerText = '🔊 Slå på ljud';
+            }
         });
     </script>
 </body>
