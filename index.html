@@ -109,23 +109,53 @@
             "uppfinner en ny sport"
         ];
 
-        function generateRandomDate() {
+        // Enkel hashfunktion för att skapa en hash av indata
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Konvertera till 32-bitars heltal
+            }
+            return Math.abs(hash);
+        }
+
+        function generatePredictionHash(name, age, footSize, handedness) {
+            const inputString = `${name}${age}${footSize}${handedness}`;
+            return hashCode(inputString);
+        }
+
+        function generateRandomDateFromHash(hash) {
             const currentDate = new Date();
-            const futureYear = currentDate.getFullYear() + Math.floor(Math.random() * 80) + 1;
-            const futureMonth = Math.floor(Math.random() * 12);
-            const futureDay = Math.floor(Math.random() * 28) + 1;
-            const futureDate = new Date(futureYear, futureMonth, futureDay);
+            const yearsToAdd = (hash % 80) + 1; // 1 till 80 år
+            const monthsToAdd = (hash % 12);
+            const daysToAdd = (hash % 28) + 1; // 1 till 28 dagar
+
+            const futureDate = new Date(
+                currentDate.getFullYear() + yearsToAdd,
+                currentDate.getMonth() + monthsToAdd,
+                currentDate.getDate() + daysToAdd
+            );
+
             return futureDate.toLocaleDateString('sv-SE');
         }
 
-        function getRandomActivity() {
-            return activities[Math.floor(Math.random() * activities.length)];
+        function getActivityFromHash(hash) {
+            const index = hash % activities.length;
+            return activities[index];
         }
 
         document.getElementById('predictionForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const deathDate = generateRandomDate();
-            const activity = getRandomActivity();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const footSize = document.getElementById('footSize').value;
+            const handedness = document.getElementById('handedness').value;
+
+            const hash = generatePredictionHash(name, age, footSize, handedness);
+
+            const deathDate = generateRandomDateFromHash(hash);
+            const activity = getActivityFromHash(hash);
 
             document.getElementById('predictionResult').style.display = 'block';
             document.getElementById('deathDate').innerText = `Enligt vår högst vetenskapliga beräkning kommer du att dö den ${deathDate}.`;
