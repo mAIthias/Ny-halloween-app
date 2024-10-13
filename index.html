@@ -10,7 +10,6 @@
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             font-family: Arial, sans-serif;
             color: #FFFAF0;
             background-color: #1c1c1c; /* Fallback-färg */
@@ -21,8 +20,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            min-width: 100%;
-            min-height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
             object-fit: cover;
         }
@@ -49,7 +48,7 @@
 
         /* Container för innehållet */
         .container {
-            max-width: 28rem;
+            max-width: 90%;
             width: 90%; /* Ändrat från 100% till 90% för bättre marginal på små skärmar */
             background-color: rgba(53, 53, 53, 0.9); /* Mörk bakgrund med lätt transparens */
             border-radius: 0.5rem;
@@ -84,6 +83,7 @@
             background-color: #1c1c1c; /* Mörkare fält för formulär */
             color: #FFFAF0;
             font-size: 1rem;
+            box-sizing: border-box;
         }
 
         button {
@@ -95,6 +95,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             font-size: 1rem;
+            box-sizing: border-box;
         }
 
         button:hover {
@@ -163,7 +164,7 @@
 </head>
 <body>
     <!-- Video-bakgrunden -->
-    <video autoplay muted loop id="video-bg">
+    <video autoplay muted loop playsinline webkit-playsinline id="video-bg">
         <source src="https://storage.googleapis.com/mathias_halloween/Halloween.mp4" type="video/mp4">
         Din webbläsare stödjer inte video-taggen.
     </video>
@@ -182,7 +183,7 @@
                 <option value="Högerhänt">Högerhänt</option>
                 <option value="Vänsterhänt">Vänsterhänt</option>
             </select>
-            <div style="display: flex; gap: 0.5rem;">
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 <button type="submit" style="flex: 1;">Förutsäg min död!</button>
                 <button type="button" id="resetButton" style="background-color: #D64933; color: #FFFAF0;">🔄</button>
             </div>
@@ -270,9 +271,15 @@
         // Funktion för att sätta på ljudet
         document.getElementById('unmuteButton').addEventListener('click', function() {
             const video = document.getElementById('video-bg');
+
+            // Kontrollera om videon redan är spelad
+            if (video.paused) {
+                video.play();
+            }
+
+            // Sätt på eller stäng av ljudet
             if (video.muted) {
                 video.muted = false;
-                video.play();
                 this.innerText = '🔇 Stäng av ljud';
             } else {
                 video.muted = true;
