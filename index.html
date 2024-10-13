@@ -7,26 +7,31 @@
     <style>
         body {
             min-height: 100vh;
-            background: url('https://www.transparenttextures.com/patterns/dark-denim-3.png'), #2d2d2d;
+            background-color: #0d0d0d; /* Mörk bakgrund för nattlig effekt */
             color: #FFFAF0;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1rem;
             font-family: Arial, sans-serif;
+            background-image: url('https://i.imgur.com/QsBO58E.png'); /* Bakgrund med subtila fladdermöss */
+            background-size: cover;
+            overflow: hidden;
         }
         .container {
-            max-width: 28rem; /* max-w-md */
+            max-width: 28rem;
             width: 100%;
-            background-color: rgba(53, 53, 53, 0.9); /* mörk bakgrund med lätt transparens */
+            background-color: rgba(53, 53, 53, 0.95); /* Mörk bakgrund med lätt transparens */
             border-radius: 0.5rem;
-            box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.5);
-            padding: 1.5rem;
+            box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
         }
         h1 {
-            font-size: 2.5rem; /* större text */
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #FF6F61; /* ljust orange */
+            color: #FF6F61; /* Halloween-orange */
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -39,14 +44,14 @@
         }
         input, select {
             width: 100%;
-            padding: 0.5rem;
+            padding: 0.75rem;
             border-radius: 0.25rem;
             border: 1px solid #FF6F61;
-            background-color: #3e3e3e;
+            background-color: #1c1c1c; /* Mörkare fält för formulär */
             color: #FFFAF0;
         }
         button {
-            padding: 0.5rem;
+            padding: 0.75rem;
             border-radius: 0.25rem;
             border: none;
             color: #FFFAF0;
@@ -55,7 +60,7 @@
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #D64933; /* mörkare orange för hover-effekt */
+            background-color: #D64933; /* Mörkare orange för hover-effekt */
         }
         .alert {
             margin-top: 1.5rem;
@@ -71,16 +76,36 @@
         .bat {
             position: absolute;
             animation: flyAcross 10s linear infinite;
-            top: 10%;
+            top: 20%;
             left: 0;
+            z-index: 1;
         }
         @keyframes flyAcross {
-            0% { transform: translateX(-100vw); }
-            100% { transform: translateX(100vw); }
+            0% { transform: translateX(-100vw) rotate(0deg); }
+            50% { transform: translateX(50vw) rotate(10deg); }
+            100% { transform: translateX(100vw) rotate(-10deg); }
+        }
+        /* Halloween dimma */
+        .fog {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/Ab4uCzU.png');
+            opacity: 0.5;
+            animation: moveFog 30s linear infinite;
+            z-index: 5;
+        }
+        @keyframes moveFog {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(50%); }
         }
     </style>
 </head>
 <body>
+    <div class="fog"></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Bat_icon.svg" class="bat" width="100" alt="fladdermus">
     <div class="container">
         <h1>💀 Dödsförutsägelse 👻</h1>
         <form id="predictionForm">
@@ -105,8 +130,6 @@
             </div>
         </div>
     </div>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Bat_icon.svg" class="bat" width="50" alt="fladdermus">
-
     <script>
         const activities = [
             "äter tacos",
