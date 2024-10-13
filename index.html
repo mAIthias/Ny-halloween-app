@@ -18,11 +18,14 @@
         /* Stil för video-bakgrunden */
         #video-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
             z-index: -1;
+            transform: translate(-50%, -50%);
             object-fit: cover;
         }
 
@@ -48,7 +51,7 @@
 
         /* Container för innehållet */
         .container {
-            max-width: 90%;
+            max-width: 28rem;
             width: 90%; /* Ändrat från 100% till 90% för bättre marginal på små skärmar */
             background-color: rgba(53, 53, 53, 0.9); /* Mörk bakgrund med lätt transparens */
             border-radius: 0.5rem;
@@ -272,19 +275,12 @@
         document.getElementById('unmuteButton').addEventListener('click', function() {
             const video = document.getElementById('video-bg');
 
-            // Kontrollera om videon redan är spelad
-            if (video.paused) {
-                video.play();
-            }
+            // Försök att pausa och spela upp videon för att aktivera ljudet på iOS
+            video.pause();
+            video.muted = false;
+            video.play();
 
-            // Sätt på eller stäng av ljudet
-            if (video.muted) {
-                video.muted = false;
-                this.innerText = '🔇 Stäng av ljud';
-            } else {
-                video.muted = true;
-                this.innerText = '🔊 Slå på ljud';
-            }
+            this.innerText = '🔇 Stäng av ljud';
         });
     </script>
 </body>
